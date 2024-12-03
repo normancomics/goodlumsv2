@@ -7,195 +7,64 @@
     <!-- Frame metadata -->
     <meta property="fc:frame" content="vNext">
     <meta property="fc:frame:image" content="https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv">
-    <meta property="fc:frame:button:1" content="🧱⛓️✍🏽⚡️ ENTER">
-    <meta property="fc:frame:button:2" content="🌈💀🌵💥 LEARN">
-    <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ ACCESS">
-    <meta property="fc:frame:button:4" content="🧧💥⚡️ MINT">
+    <meta property="fc:frame:button:1" content="🧱⛓️✍🏽⚡️ CONNECT WALLET">
+    <meta property="fc:frame:button:2" content="🌈💀🌵💥 MINT ON BASE">
+    <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO">
+    <meta property="fc:frame:button:4" content="🧧💥⚡️ VIEW COLLECTION">
 
-    <style>
-        @font-face {
-            font-family: 'Pixel';
-            src: url('https://cdnjs.cloudflare.com/ajax/libs/press-start-2p/1.0.0/press-start-2p.woff2') format('woff2');
+    <!-- Web3 dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script>
+        let provider;
+        let signer;
+        
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum !== 'undefined') {
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    signer = provider.getSigner();
+                    
+                    // Switch to BASE network
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x2105' }], // BASE chainId
+                    });
+                    
+                    return true;
+                } else {
+                    console.log('Please install Rainbow Wallet');
+                    return false;
+                }
+            } catch (error) {
+                console.error(error);
+                return false;
+            }
         }
 
-        body {
-            background: #000;
-            color: #0f0;
-            font-family: 'Pixel', monospace;
-            padding: 20px;
+        async function mintOnBase() {
+            if (!provider || !signer) {
+                await connectWallet();
+            }
+            
+            try {
+                const tx = await signer.sendTransaction({
+                    to: "YOUR_CONTRACT_ADDRESS",
+                    value: ethers.utils.parseEther("0.1"),
+                    data: "0x" // Add your mint function call data here
+                });
+                
+                await tx.wait();
+                console.log("Minted successfully!", tx.hash);
+            } catch (error) {
+                console.error("Minting failed:", error);
+            }
         }
+    </script>
 
-        .container {
-            border: 4px solid #0f0;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-        }
-
-        .loading-text {
-            font-size: 14px;
-            margin: 10px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 3s steps(50, end);
-            opacity: 0;
-        }
-
-        .loading-text.active {
-            opacity: 1;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        .link {
-            display: block;
-            background: transparent;
-            border: 2px solid #0f0;
-            color: #0f0;
-            padding: 12px;
-            margin: 8px 0;
-            text-decoration: none;
-            font-family: 'Pixel', monospace;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-        }
-
-        .link:hover {
-            background: rgba(0, 255, 0, 0.1);
-            transform: translateX(5px);
-        }
-
-        .title {
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #0f0;
-        }
-
-        .notice {
-            text-align: center;
-            padding: 15px;
-            border: 1px dashed #0f0;
-            margin: 20px 0;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            50% { border-color: transparent; }
-        }
-    </style>
+    <!-- Your existing styles here -->
 </head>
 <body>
-    <div class="container">
-        <div class="title">THE GOODLUMS V2: BASED & SANKO-CODED</div>
-        
-        <div id="loading-sequence">
-            <div class="loading-text">> LOADING THE GOODLUMS WARPCAST V2 INTERFACE...</div>
-            <div class="loading-text">> LOADING ESOTERIC LORE...</div>
-            <div class="loading-text">> LOADING BLACK MARKET GUERRILLA MEMES...</div>
-            <div class="loading-text">> LOADING ANTI-POP-CULTURE STYLE CONSULTANT...</div>
-            <div class="loading-text">> LOADING SANKO-CODED...</div>
-            <div class="loading-text">> LOADING BASED WARPCAST V2 DECIPHER...</div>
-        </div>
-
-        <div class="notice">
-            USE DIRECTLY IN FRAME FOR BEST RESULTS
-        </div>
-
-        <!-- Navigation links -->
-        <a href="https://warpcast.com/normancomics" class="link" onclick="playSound()">🧱⛓️✍🏽⚡️ VISIT NORMANCOMICS</a>
-        <a href="https://medium.com/@NRMN_/the-goodlums-sanko-sewer-division-yearbook-custom-pfp-pass-1-200-4680b130005a" class="link" onclick="playSound()">🌈💀🌵💥 BASED GOODLUMS LORE-SANKO CODED</a>
-        <a href="https://warpcast.com/~/channel/thegoodlums" class="link" onclick="playSound()">🏰🧙🏿‍♂️🔮⚡️ ENTER GOODLUMS HQ</a>
-        <a href="https://opensea.io/collection/thegoodlums" class="link" onclick="playSound()">🧧💥⚡️ MINT OFFICIAL PFP ON BASE (Ξ 0.1)</a>
-        <a href="https://www.scatter.art/collection/the-goodlums-sanko-sewer-division-yearbook-custom-pfp" class="link" onclick="playSound()">🧧🤳⚡️ MINT SANKO SEWER DIV. YEARBOOK PFP (5 $DMT)</a>
-        <a href="https://mint.club/token/base/GOODLUMS" class="link" onclick="playSound()">💰🎰 GET $GOODLUMS ON BASE</a>
-        <a href="https://fanko.tech/swap/sanko/0x532584289d1683d122fc20aa2b15581831118dcf" class="link" onclick="playSound()">🧱⛓️👨‍🦽‍➡️💰⚡️ GET $wGOODLUMS ON SANKO</a>
-        <a href="https://basecamp.wtf/token/0x2d6663253a4d438c41d66ccae35051c7f3c8ec7a:1996" class="link" onclick="playSound()">💰🏦 GET $GOODLUMS ON SANKO</a>
-        <a href="https://t.me/thegoodlums" class="link" onclick="playSound()">📡 1-900-GOODLUMS PARTY CHAT</a>
-        <a href="https://x.com/thegoodlums" class="link" onclick="playSound()">🌐 THE GOODLUMS on X</a>
-        <a href="https://x.com/toughontheweb" class="link" onclick="playSound()">💻 FOLLOW: $GOODLUMS/$wGOODLUMS on X</a>
-        <a href="https://x.com/KEKBONDS" class="link" onclick="playSound()">🖥️ FOLLOW NORMANCOMICS(KEKBONDS) on X</a>
-        <a href="https://t.me/NORMANCOMICS" class="link" onclick="playSound()">📟 HAVE SOMETHING IMPORTANT? IT CAN'T WAIT? PAGE NORMANCOMICS DIRECT</a>
-    </div>
-
-    <script>
-        let audioContext;
-
-        function typeWriter(element, text, i = 0) {
-            if (i === 0) {
-                element.textContent = '> ';
-            }
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                playTypeSound();
-                setTimeout(() => typeWriter(element, text, i + 1), 50);
-            }
-        }
-
-        function playTypeSound() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            
-            const osc = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            
-            osc.connect(gain);
-            gain.connect(audioContext.destination);
-            
-            gain.gain.value = 0.05;
-            osc.frequency.value = 660;
-            osc.type = 'square';
-            
-            osc.start();
-            setTimeout(() => osc.stop(), 10);
-        }
-
-        function playSound() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            
-            const osc = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            
-            osc.connect(gain);
-            gain.connect(audioContext.destination);
-            
-            gain.gain.value = 0.1;
-            osc.frequency.value = 440;
-            osc.type = 'square';
-            
-            osc.start();
-            setTimeout(() => osc.stop(), 100);
-        }
-
-        // Start loading sequence
-        document.addEventListener('DOMContentLoaded', () => {
-            const loadingTexts = document.querySelectorAll('.loading-text');
-            loadingTexts.forEach((element, index) => {
-                setTimeout(() => {
-                    const text = element.textContent;
-                    element.textContent = '';
-                    element.classList.add('active');
-                    typeWriter(element, text);
-                }, index * 2000);
-            });
-        });
-
-        // Initialize audio on first interaction
-        document.body.addEventListener('click', () => {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        });
-    </script>
+    <!-- Your existing content here -->
 </body>
 </html>
