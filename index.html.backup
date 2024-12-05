@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Frame Metadata -->
+    <meta property="fc:frame" content="vNext">
+    <meta property="fc:frame:image" content="https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv">
+    <meta property="fc:frame:button:1" content="🧱⛓️✍🏽⚡️ CONNECT WALLET">
+    <meta property="fc:frame:button:2" content="🌈💀🌵💥 MINT ON BASE">
+    <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO">
+    <meta property="fc:frame:button:4" content="🧧💥⚡️ VIEW COLLECTION">
+
+    <!-- Web3 Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+
+    <!-- Styles -->
+    <style>
+        @font-face {
+            font-family: 'Pixel';
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/press-start-2p/1.0.0/press-start-2p.woff2') format('woff2');
+        }
+
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Pixel', monospace;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: url('https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            border: 4px solid #0f0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .link {
+            display: block;
+            background: transparent;
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 12px;
+            margin: 8px 0;
+            text-decoration: none;
+            font-family: 'Pixel', monospace;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .link:hover {
+            background: rgba(0, 255, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .notice {
+            text-align: center;
+            padding: 15px;
+            border: 1px dashed #0f0;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                border-color: transparent;
+            }
+        }
+    </style>
+    <title>Mint Frame</title>
+</head>
+<body>
+    <div class="container">
+        <div class="title">THE GOODLUMS V2 FRAME</div>
+        <button class="link" id="connectWallet">🧱⛓️✍🏽⚡️ CONNECT WALLET</button>
+        <button class="link" id="mintBase">🌈💀🌵💥 MINT ON BASE</button>
+        <button class="link" id="mintSanko">🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO</button>
+        <a class="link" href="https://scatter.art" target="_blank">🧧💥⚡️ VIEW COLLECTION</a>
+        <div class="notice">Connect your wallet to mint NFTs!</div>
+    </div>
+
+    <script>
+        // Ethers.js setup
+        let provider, signer;
+
+        // Connect Wallet Button
+        document.getElementById('connectWallet').addEventListener('click', async () => {
+            if (!window.ethereum) {
+                alert("MetaMask is required!");
+                return;
+            }
+
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            signer = provider.getSigner();
+
+            const address = await signer.getAddress();
+            alert(`Wallet Connected: ${address}`);
+        });
+
+        // Mint on Base Button
+        document.getElementById('mintBase').addEventListener('click', async () => {
+            // Add Base Mint Logic here
+            alert("Minting on Base Chain...");
+        });
+
+        // Mint on Sanko Button
+        document.getElementById('mintSanko').addEventListener('click', async () => {
+            // Add Sanko Mint Logic here
+            alert("Minting on Sanko Chain...");
+        });
+    </script>
+</body>
+</html>

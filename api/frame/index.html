@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Frame metadata -->
+    <meta property="fc:frame" content="vNext">
+    <meta property="fc:frame:image" content="https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv">
+    <meta property="fc:frame:button:1" content="��⛓️✍🏽⚡️ CONNECT WALLET">
+    <meta property="fc:frame:button:2" content="🌈💀🌵💥 MINT ON BASE">
+    <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO">
+    <meta property="fc:frame:button:4" content="🧧💥⚡️ VIEW COLLECTION">
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const buttonIndex = urlParams.get("button");
+            
+            if (buttonIndex === "1") {
+                window.location.href = "https://normancomics.github.io/goodlumsv2/";
+            } else if (buttonIndex === "2") {
+                window.location.href = "https://warpcast.com/~/tx?chain=base&to=0xAC173184c86360193F42e7BAe582777FA5107474&value=0.1e18";
+            } else if (buttonIndex === "3") {
+                window.location.href = "https://warpcast.com/~/tx?chain=sanko&to=0x6256f81201b52e7024ab60f4c1a9076fe6e53999&value=5e18";
+            } else if (buttonIndex === "4") {
+                window.location.href = "https://opensea.io/collection/thegoodlums";
+            }
+        }
+    </script>
+</body>
+</html>
