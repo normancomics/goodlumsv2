@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@pinata/sdk": "^2.1.0",
-    "axios": "^0.21.4",
+    "axios": "^0.28.0",
     "deps": "^1.0.0",
     "dotenv": "^16.4.7",
     "ethers": "^6.13.4",
