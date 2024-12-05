@@ -1,0 +1,154 @@
+```bash
+cat > index.html << 'EOL'
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Frame metadata -->
+    <meta property="fc:frame" content="vNext">
+    <meta property="fc:frame:image" content="https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv">
+    <meta property="fc:frame:button:1" content="🧱⛓️✍🏽⚡️ CONNECT WALLET">
+    <meta property="fc:frame:button:2" content="🌈💀🌵💥 MINT ON BASE">
+    <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO">
+    <meta property="fc:frame:button:4" content="🧧💥⚡️ VIEW COLLECTION">
+    <meta property="fc:frame:post_url" content="https://normancomics.github.io/goodlumsv2/api/frame">
+
+    <!-- Web3 dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #0f0;
+            font-family: monospace;
+            text-align: center;
+        }
+        .container {
+            border: 2px solid #0f0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.9);
+        }
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #0f0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: transparent;
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-family: monospace;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">THE GOODLUMS V2: BASED & SANKO-CODED 🧱⛓️✍🏽⚡️</div>
+        <p style="color: #0f0;">Ready to mint your GOODLUMS...</p>
+        
+        <button onclick="connectWallet()" class="button">
+            🔌 Connect Wallet
+        </button>
+        <button onclick="mintOnBase()" class="button">
+            🎯 Mint on BASE (0.1 ETH)
+        </button>
+        <button onclick="mintOnSanko()" class="button">
+            🎨 Mint on SANKO (5 DMT)
+        </button>
+    </div>
+
+    <script>
+        let provider;
+        let signer;
+        
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum !== 'undefined') {
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    signer = provider.getSigner();
+                    
+                    // Switch to BASE network
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x2105' }], // BASE chainId
+                    });
+                    
+                    return true;
+                } else {
+                    alert('Please install Rainbow Wallet');
+                    return false;
+                }
+            } catch (error) {
+                alert('Connection failed: ' + error.message);
+                return false;
+            }
+        }
+
+        async function mintOnBase() {
+            if (!provider || !signer) {
+                await connectWallet();
+            }
+            
+            try {
+                const tx = await signer.sendTransaction({
+                    to: "0xAC173184c86360193F42e7BAe582777FA5107474",
+                    value: ethers.utils.parseEther("0.1"),
+                    data: "0x"
+                });
+                
+                await tx.wait();
+                alert("Minted successfully! Transaction: " + tx.hash);
+            } catch (error) {
+                alert("Minting failed: " + error.message);
+            }
+        }
+
+        async function mintOnSanko() {
+            if (!provider || !signer) {
+                await connectWallet();
+            }
+            
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [{
+                        chainId: '0x' + (8082).toString(16),
+                        chainName: 'SANKO',
+                        nativeCurrency: {
+                            name: 'DMT',
+                            symbol: 'DMT',
+                            decimals: 18
+                        },
+                        rpcUrls: ['https://mainnet.skalenodes.com/v1/light-vast-diphda'],
+                        blockExplorerUrls: ['https://light-vast-diphda.explorer.mainnet.skalenodes.com/']
+                    }]
+                });
+
+                const tx = await signer.sendTransaction({
+                    to: "0x6256f81201b52e7024ab60f4c1a9076fe6e53999",
+                    value: ethers.utils.parseEther("5"),
+                    data: "0x"
+                });
+                
+                await tx.wait();
+                alert("Minted on SANKO successfully! Transaction: " + tx.hash);
+            } catch (error) {
+                alert("SANKO minting failed: " + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
+EOL
