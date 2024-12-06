@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,7 @@
     <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO">
     <meta property="fc:frame:button:4" content="🧧💥⚡️ VIEW COLLECTION">
     <meta property="fc:frame:post_url" content="https://normancomics.github.io/goodlumsv2/api/frame">
+    <meta property="fc:frame:state" content="initial">
 
     <!-- Web3 dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
@@ -64,6 +66,18 @@
             padding: 10px;
             margin: 20px 0;
         }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: transparent;
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-family: monospace;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -84,94 +98,6 @@
             USE DIRECTLY IN FRAME FOR BEST RESULTS
         </div>
 
-        <!-- Navigation links -->
-        <a href="https://warpcast.com/normancomics" class="link" onclick="playSound()">🧱⛓️✍🏽⚡️ VISIT NORMANCOMICS</a>
-        <a href="https://medium.com/@NRMN_/the-goodlums-sanko-sewer-division-yearbook-custom-pfp-pass-1-200-4680b130005a" class="link" onclick="playSound()">🌈💀🌵💥 BASED GOODLUMS LORE-SANKO CODED</a>
-        <a href="https://warpcast.com/~/channel/thegoodlums" class="link" onclick="playSound()">🏰🧙🏿‍♂️🔮⚡️ ENTER GOODLUMS HQ</a>
-        <a href="https://opensea.io/collection/thegoodlums" class="link" onclick="playSound()">🧧💥⚡️ VIEW COLLECTION</a>
-    </div>
-
-    <script>
-        // Play sound on link click
-        function playSound() {
-            var audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
-            audio.play();
-        }
-
-        // Handle frame interactions based on button index
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const buttonIndex = urlParams.get("button");
-            
-            if (buttonIndex === "1") {
-                window.location.href = "https://warpcast.com/~/tx?chain=base&to=0xAC173184c86360193F42e7BAe582777FA5107474&value=0.1e18";
-            } else if (buttonIndex === "2") {
-                window.location.href = "https://warpcast.com/~/tx?chain=base&to=0xAC173184c86360193F42e7BAe582777FA5107474&value=0.1e18";
-            } else if (buttonIndex === "3") {
-                window.location.href = "https://warpcast.com/~/tx?chain=sanko&to=0x6256f81201b52e7024ab60f4c1a9076fe6e53999&value=5e18";
-            } else if (buttonIndex === "4") {
-                window.location.href = "https://opensea.io/collection/thegoodlums";
-            }
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Frame metadata -->
-    <meta property="fc:frame" content="vNext">
-    <meta property="fc:frame:image" content="https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv">
-    <meta property="fc:frame:button:1" content="🧱⛓️✍🏽⚡️ CONNECT WALLET">
-    <meta property="fc:frame:button:2" content="🌈💀🌵💥 MINT ON BASE">
-    <meta property="fc:frame:button:3" content="🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO">
-    <meta property="fc:frame:button:4" content="🧧💥⚡️ VIEW COLLECTION">
-    <meta property="fc:frame:post_url" content="https://normancomics.github.io/goodlumsv2/api/frame">
-
-    <!-- Web3 dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            background: #000;
-            color: #0f0;
-            font-family: monospace;
-            text-align: center;
-        }
-        .container {
-            border: 2px solid #0f0;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(0,0,0,0.9);
-        }
-        .title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #0f0;
-        }
-        .button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: transparent;
-            border: 2px solid #0f0;
-            color: #0f0;
-            font-family: monospace;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="title">THE GOODLUMS V2: BASED & SANKO-CODED 🧱⛓️✍🏽⚡️</div>
-        <p style="color: #0f0;">Ready to mint your GOODLUMS...</p>
-        
         <button onclick="connectWallet()" class="button">
             🔌 Connect Wallet
         </button>
@@ -181,11 +107,23 @@
         <button onclick="mintOnSanko()" class="button">
             🎨 Mint on SANKO (5 DMT)
         </button>
+
+        <!-- Navigation links -->
+        <a href="https://warpcast.com/normancomics" class="link" onclick="playSound()">🧱⛓️✍🏽⚡️ VISIT NORMANCOMICS</a>
+        <a href="https://medium.com/@NRMN_/the-goodlums-sanko-sewer-division-yearbook-custom-pfp-pass-1-200-4680b130005a" class="link" onclick="playSound()">🌈💀🌵💥 BASED GOODLUMS LORE-SANKO CODED</a>
+        <a href="https://warpcast.com/~/channel/thegoodlums" class="link" onclick="playSound()">🏰🧙🏿‍♂️🔮⚡️ ENTER GOODLUMS HQ</a>
+        <a href="https://opensea.io/collection/thegoodlums" class="link" onclick="playSound()">🧧💥⚡️ VIEW COLLECTION</a>
     </div>
 
     <script>
         let provider;
         let signer;
+        
+        // Play sound on link click
+        function playSound() {
+            var audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+            audio.play();
+        }
         
         async function connectWallet() {
             try {
@@ -194,12 +132,13 @@
                     await provider.send("eth_requestAccounts", []);
                     signer = provider.getSigner();
                     
-                    // Switch to BASE network
                     await window.ethereum.request({
                         method: 'wallet_switchEthereumChain',
                         params: [{ chainId: '0x2105' }], // BASE chainId
                     });
                     
+                    const address = await signer.getAddress();
+                    alert('Connected: ' + address);
                     return true;
                 } else {
                     alert('Please install Rainbow Wallet');
@@ -266,3 +205,4 @@
     </script>
 </body>
 </html>
+```
