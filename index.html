@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- Frame metadata -->
     <meta property="fc:frame" content="vNext">
     <meta property="fc:frame:image" content="https://turquoise-mobile-grasshopper-718.mypinata.cloud/ipfs/QmZPYccDUwX1yMyBFSJwwwRgaVX7FQqwTd1ZXxCZtmtjXv">
@@ -26,7 +25,6 @@
             padding: 20px;
             margin: 0;
         }
-
         .container {
             border: 2px solid #0f0;
             padding: 20px;
@@ -34,39 +32,6 @@
             margin: 0 auto;
             background: rgba(0, 0, 0, 0.9);
         }
-
-        .loading-text {
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
-            margin: 10px 0;
-            padding-left: 10px;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .link {
-            display: block;
-            border: 1px solid #0f0;
-            color: #0f0;
-            padding: 10px;
-            margin: 10px 0;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .link:hover {
-            background: rgba(0, 255, 0, 0.1);
-        }
-
-        .notice {
-            text-align: center;
-            border: 1px dashed #0f0;
-            padding: 10px;
-            margin: 20px 0;
-        }
-
         .button {
             display: block;
             width: 100%;
@@ -78,131 +43,54 @@
             font-family: monospace;
             cursor: pointer;
         }
+        .button:hover {
+            background: rgba(0, 255, 0, 0.1);
+        }
+        @media (max-width: 600px) {
+            .button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>THE GOODLUMS V2: BASED & SANKO-CODED</h1>
-        
-        <!-- Loading sequence -->
-        <div id="loading-sequence">
-            <div class="loading-text" style="animation-delay: 0.5s">> LOADING THE GOODLUMS WARPCAST V2 INTERFACE...</div>
-            <div class="loading-text" style="animation-delay: 1.0s">> LOADING ESOTERIC LORE...</div>
-            <div class="loading-text" style="animation-delay: 1.5s">> LOADING BLACK MARKET GUERRILLA MEMES...</div>
-            <div class="loading-text" style="animation-delay: 2.0s">> LOADING ANTI-POP-CULTURE STYLE CONSULTANT...</div>
-            <div class="loading-text" style="animation-delay: 2.5s">> LOADING SANKO-CODED...</div>
-            <div class="loading-text" style="animation-delay: 3.0s">> LOADING BASED WARPCAST V2 DECIPHER...</div>
-        </div>
 
-        <div class="notice">
-            USE DIRECTLY IN FRAME FOR BEST RESULTS
-        </div>
-
-        <button onclick="connectWallet()" class="button">
-            🔌 Connect Wallet
-        </button>
-        <button onclick="mintOnBase()" class="button">
-            🎯 Mint on BASE (0.1 ETH)
-        </button>
-        <button onclick="mintOnSanko()" class="button">
-            🎨 Mint on SANKO (5 DMT)
-        </button>
-
-        <!-- Navigation links -->
-        <a href="https://warpcast.com/normancomics" class="link" onclick="playSound()">🧱⛓️✍🏽⚡️ VISIT NORMANCOMICS</a>
-        <a href="https://medium.com/@NRMN_/the-goodlums-sanko-sewer-division-yearbook-custom-pfp-pass-1-200-4680b130005a" class="link" onclick="playSound()">🌈💀🌵💥 BASED GOODLUMS LORE-SANKO CODED</a>
-        <a href="https://warpcast.com/~/channel/thegoodlums" class="link" onclick="playSound()">🏰🧙🏿‍♂️🔮⚡️ ENTER GOODLUMS HQ</a>
-        <a href="https://opensea.io/collection/thegoodlums" class="link" onclick="playSound()">🧧💥⚡️ VIEW COLLECTION</a>
+        <!-- Buttons -->
+        <button class="button" id="button-1" aria-label="Connect Wallet">🧱⛓️✍🏽⚡️ CONNECT WALLET</button>
+        <button class="button" id="button-2" aria-label="Mint on Base">🌈💀🌵💥 MINT ON BASE</button>
+        <button class="button" id="button-3" aria-label="Mint on Sanko">🏰🧙🏿‍♂️🔮⚡️ MINT ON SANKO</button>
+        <button class="button" id="button-4" aria-label="View Collection">🧧💥⚡️ VIEW COLLECTION</button>
     </div>
 
     <script>
-        let provider;
-        let signer;
-        
-        // Play sound on link click
-        function playSound() {
-            var audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
-            audio.play();
-        }
-        
-        async function connectWallet() {
+        const postUrl = "https://normancomics.github.io/goodlumsv2/api/frame";
+
+        // Add event listeners to buttons
+        document.getElementById('button-1').addEventListener('click', () => postFrameState('connect_wallet'));
+        document.getElementById('button-2').addEventListener('click', () => postFrameState('mint_base'));
+        document.getElementById('button-3').addEventListener('click', () => postFrameState('mint_sanko'));
+        document.getElementById('button-4').addEventListener('click', () => postFrameState('view_collection'));
+
+        // Function to post state updates
+        async function postFrameState(action) {
             try {
-                if (typeof window.ethereum !== 'undefined') {
-                    provider = new ethers.providers.Web3Provider(window.ethereum);
-                    await provider.send("eth_requestAccounts", []);
-                    signer = provider.getSigner();
-                    
-                    await window.ethereum.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId: '0x2105' }], // BASE chainId
-                    });
-                    
-                    const address = await signer.getAddress();
-                    alert('Connected: ' + address);
-                    return true;
+                const response = await fetch(postUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ state: action })
+                });
+                if (response.ok) {
+                    console.log(`State updated to: ${action}`);
                 } else {
-                    alert('Please install Rainbow Wallet');
-                    return false;
+                    console.error('Failed to update frame state');
                 }
             } catch (error) {
-                alert('Connection failed: ' + error.message);
-                return false;
-            }
-        }
-
-        async function mintOnBase() {
-            if (!provider || !signer) {
-                await connectWallet();
-            }
-            
-            try {
-                const tx = await signer.sendTransaction({
-                    to: "0xAC173184c86360193F42e7BAe582777FA5107474",
-                    value: ethers.utils.parseEther("0.1"),
-                    data: "0x"
-                });
-                
-                await tx.wait();
-                alert("Minted successfully! Transaction: " + tx.hash);
-            } catch (error) {
-                alert("Minting failed: " + error.message);
-            }
-        }
-
-        async function mintOnSanko() {
-            if (!provider || !signer) {
-                await connectWallet();
-            }
-            
-            try {
-                await window.ethereum.request({
-                    method: 'wallet_addEthereumChain',
-                    params: [{
-                        chainId: '0x' + (8082).toString(16),
-                        chainName: 'SANKO',
-                        nativeCurrency: {
-                            name: 'DMT',
-                            symbol: 'DMT',
-                            decimals: 18
-                        },
-                        rpcUrls: ['https://mainnet.skalenodes.com/v1/light-vast-diphda'],
-                        blockExplorerUrls: ['https://light-vast-diphda.explorer.mainnet.skalenodes.com/']
-                    }]
-                });
-
-                const tx = await signer.sendTransaction({
-                    to: "0x6256f81201b52e7024ab60f4c1a9076fe6e53999",
-                    value: ethers.utils.parseEther("5"),
-                    data: "0x"
-                });
-                
-                await tx.wait();
-                alert("Minted on SANKO successfully! Transaction: " + tx.hash);
-            } catch (error) {
-                alert("SANKO minting failed: " + error.message);
+                console.error('Error posting frame state:', error);
             }
         }
     </script>
 </body>
 </html>
-```
